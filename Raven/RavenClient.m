@@ -385,6 +385,7 @@ void exceptionHandler(NSException *exception) {
 }
 
 - (void)sendJSON:(NSData *)JSON {
+#ifdef RELEASE_VERSION //Adhoc AppleStore 时对应的是正式域名
     if (!self.config) {
         NSLog(@"Sentry JSON (DSN not configured, will not be sent):\n%@\n",
               [[NSString alloc] initWithData:JSON encoding:NSUTF8StringEncoding]);
@@ -413,6 +414,7 @@ void exceptionHandler(NSException *exception) {
              NSLog(@"Connection failed! Error - %@ %@", [connectionError localizedDescription], [[connectionError userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
         }
     }];
+#endif
 }
 
 #pragma mark - JSON helpers
